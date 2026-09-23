@@ -1,0 +1,11 @@
+{
+  "name": "youtube-transcript-tool",
+  "version": "1.0.0",
+  "description": "YouTube Video to Transcript tool with secure serverless proxy",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "devDependencies": {
+    "vercel": "^34.0.0"
+  }
+}
