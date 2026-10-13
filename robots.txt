@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://youtube-transcript-tool-2qsz.vercel.app/sitemap.xml
