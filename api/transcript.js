@@ -24,7 +24,7 @@ export default async function handler(req, res) {
 
   try {
     // Call Supadata official endpoint: GET https://api.supadata.ai/v1/transcript?url=...
-    const supadataUrl = `https://api.supadata.ai/v1/transcript?url=${encodeURIComponent(videoUrl)}`;
+    const supadataUrl = `https://api.supadata.ai/v1/transcript?url=${encodeURIComponent(videoUrl)}&mode=native&text=true`;
     
     const response = await fetch(supadataUrl, {
       method: 'GET',
