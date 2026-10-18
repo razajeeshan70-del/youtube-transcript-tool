@@ -260,12 +260,63 @@
     return false;
   }
         }
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#&?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[2].length === 11);
-        }
+async function getTranscript(videoUrl) {
+  if (!isValidYouTubeUrl(videoUrl)) {
+    throw new Error("Invalid YouTube URL. Please enter a valid YouTube video link.");
+  }
 
-        async function getTranscript(videoUrl) {
+  const response = await fetch('/api/transcript', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ videoUrl })
+  });
+
+  let data = await response.json();
+
+  if (response.status === 202 && data.processing && data.jobId) {
+    const jobId = data.jobId;
+
+    for (let attempt = 0; attempt < 60; attempt++) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      const jobResponse = await fetch('/api/transcript', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ jobId })
+      });
+
+      data = await jobResponse.json();
+
+      if (jobResponse.ok && data.success) {
+        return data.transcript;
+      }
+
+      if (data.processing) {
+        continue;
+      }
+
+      throw new Error(
+        data.message || 'Failed to generate transcript.'
+      );
+    }
+
+    throw new Error(
+      'Transcript is taking too long. Please try again.'
+    );
+  }
+
+  if (!response.ok || !data.success) {
+    throw new Error(
+      data.message || 'Failed to retrieve transcript from the server.'
+    );
+  }
+
+  return data.transcript;
+}
   const response = await fetch('/api/transcript', {
     method: 'POST',
     headers: {
