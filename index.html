@@ -1,347 +1,490 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="google-site-verification" content="ujFfHjm2cNmdrF9l77nwVc2SDCbZ7UIjndXXq2RND8E" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Video to Transcript | Free Online Transcript Extractor</title>
-    <meta name="description" content="Easily extract and download transcripts from supported YouTube videos in seconds. Clean, fast, mobile-friendly transcript tool for creators, researchers, and students.">
-    <link rel="canonical" href="https://youtube-transcript-tool-2qsz.vercel.app/">
-    
-    <!-- Open Graph Tags -->
-    <meta property="og:title" content="YouTube Video to Transcript | Free Online Transcript Extractor">
-    <meta property="og:description" content="Easily extract and download transcripts from supported YouTube videos in seconds.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://youtube-transcript-tool-2qsz.vercel.app/">
-    
-    <!-- JSON-LD WebApplication Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "YouTube Video to Transcript",
-      "url": "https://youtube-transcript-tool-2qsz.vercel.app/",
-      "description": "Easily extract and download transcripts from supported YouTube videos in seconds.",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "All",
-      "browserRequirements": "Requires JavaScript. Requires HTML5.",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
+  <meta charset="UTF-8">
+  <meta name="google-site-verification" content="ujFfHjm2cNmdrF9l77nwVc2SDCbZ7UIjndXXq2RND8E">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>YouTube Video to Transcript | Free Online Transcript Extractor</title>
+  <meta name="description" content="Easily extract and download transcripts from supported YouTube videos. A free, fast and mobile-friendly transcript tool for creators, researchers and students.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://youtube-transcript-tool-2qsz.vercel.app/">
+
+  <meta property="og:title" content="YouTube Video to Transcript | Free Online Transcript Extractor">
+  <meta property="og:description" content="Extract, copy and download transcripts from supported YouTube videos.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://youtube-transcript-tool-2qsz.vercel.app/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Transcript Tools",
+    "url": "https://youtube-transcript-tool-2qsz.vercel.app/",
+    "description": "A free online tool to extract, copy and download transcripts from supported YouTube videos.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #transcript-content {
+      overflow-wrap: anywhere;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-gray-50 to-zinc-100 text-slate-800">
+
+  <header class="sticky top-0 z-50 border-b border-slate-200 bg-white/95">
+    <div class="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6">
+      <a href="/" class="flex items-center gap-3" aria-label="Transcript Tools home">
+        <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-600 text-lg font-bold text-white">T</span>
+        <span class="text-lg font-bold text-slate-900">Transcript Tools</span>
+      </a>
+
+      <nav class="hidden items-center gap-6 text-sm font-medium sm:flex">
+        <a href="#how-it-works" class="hover:text-indigo-600">How it works</a>
+        <a href="#faq" class="hover:text-indigo-600">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto w-full max-w-4xl flex-grow px-4 py-10 sm:px-6 sm:py-16">
+
+    <section class="mb-10 text-center">
+      <h1 class="mb-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+        YouTube Video to Transcript
+      </h1>
+      <p class="mx-auto max-w-2xl text-base text-slate-600 sm:text-lg">
+        Get the transcript of a supported YouTube video. Paste your video link below to get started.
+      </p>
+    </section>
+
+    <section class="mb-16 rounded-2xl border border-slate-200 bg-white p-5 shadow-xl sm:p-10">
+
+      <form id="transcript-form">
+        <label for="youtube-url" class="mb-2 block text-sm font-semibold text-slate-700">
+          YouTube Video URL
+        </label>
+
+        <input
+          type="url"
+          id="youtube-url"
+          name="youtube-url"
+          required
+          autocomplete="url"
+          placeholder="https://www.youtube.com/watch?v=..."
+          aria-describedby="url-help"
+          class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3.5 text-base text-slate-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+        >
+
+        <p id="url-help" class="mt-2 text-xs text-slate-500">
+          Enter a valid YouTube video link.
+        </p>
+
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+          <button
+            type="submit"
+            id="generate-btn"
+            class="flex-1 rounded-xl bg-indigo-600 px-6 py-3.5 font-semibold text-white transition hover:bg-indigo-700"
+          >
+            Generate Transcript →
+          </button>
+
+          <button
+            type="button"
+            id="clear-btn"
+            class="rounded-xl border border-slate-300 bg-white px-6 py-3.5 font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Clear
+          </button>
+        </div>
+      </form>
+
+      <div id="loading-state" role="status" aria-live="polite" hidden
+        class="mt-8 rounded-xl border border-indigo-100 bg-indigo-50 p-6 text-center">
+        <div class="mx-auto mb-3 h-8 w-8 animate-spin rounded-full border-4 border-indigo-600 border-t-transparent"></div>
+        <p class="font-semibold text-slate-700">Generating transcript...</p>
+        <p class="mt-1 text-sm text-slate-500">Please wait while we process your video.</p>
+      </div>
+
+      <div id="error-box" role="alert" hidden
+        class="mt-6 rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-700">
+        <p class="mb-1 font-bold">Unable to generate transcript</p>
+        <p id="error-message-text"></p>
+      </div>
+
+      <section id="output-section" hidden class="mt-8 border-t border-slate-200 pt-6">
+        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h2 class="text-lg font-bold text-slate-900">Transcript Result</h2>
+
+          <div class="flex gap-2">
+            <button
+              type="button"
+              id="copy-btn"
+              class="flex-1 rounded-lg bg-slate-100 px-4 py-2 text-sm font-semibold hover:bg-slate-200 sm:flex-none"
+            >
+              Copy Transcript
+            </button>
+
+            <button
+              type="button"
+              id="download-btn"
+              class="flex-1 rounded-lg bg-slate-100 px-4 py-2 text-sm font-semibold hover:bg-slate-200 sm:flex-none"
+            >
+              Download TXT
+            </button>
+          </div>
+        </div>
+
+        <textarea
+          id="transcript-content"
+          readonly
+          aria-label="Generated transcript"
+          class="h-80 w-full resize-y rounded-xl border border-slate-300 bg-slate-50 p-4 font-mono text-sm leading-relaxed text-slate-800 outline-none focus:ring-2 focus:ring-indigo-200"
+        ></textarea>
+
+        <p id="transcript-info" class="mt-2 text-xs text-slate-500"></p>
+      </section>
+
+    </section>
+
+    <section id="how-it-works" class="mb-16">
+      <h2 class="mb-6 text-center text-2xl font-bold text-slate-900">How it works</h2>
+
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-lg font-bold text-indigo-600">1</div>
+          <h3 class="mb-2 font-semibold text-slate-900">Paste a YouTube URL</h3>
+          <p class="text-sm leading-6 text-slate-600">Copy a supported YouTube video link and paste it into the input field.</p>
+        </article>
+
+        <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-lg font-bold text-indigo-600">2</div>
+          <h3 class="mb-2 font-semibold text-slate-900">Generate Transcript</h3>
+          <p class="text-sm leading-6 text-slate-600">Our server sends your video link to the configured transcript API.</p>
+        </article>
+
+        <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-lg font-bold text-indigo-600">3</div>
+          <h3 class="mb-2 font-semibold text-slate-900">Copy or Download</h3>
+          <p class="text-sm leading-6 text-slate-600">Copy the resulting text or save it as a TXT file for your notes.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="faq" class="mb-12">
+      <h2 class="mb-6 text-center text-2xl font-bold text-slate-900">
+        Frequently Asked Questions
+      </h2>
+
+      <div class="mx-auto max-w-3xl space-y-4">
+        <article class="rounded-2xl border border-slate-200 bg-white p-6">
+          <h3 class="mb-2 font-semibold">What is a YouTube transcript?</h3>
+          <p class="text-sm leading-6 text-slate-600">A transcript is the written text of the spoken words in a video.</p>
+        </article>
+
+        <article class="rounded-2xl border border-slate-200 bg-white p-6">
+          <h3 class="mb-2 font-semibold">Can every video be transcribed?</h3>
+          <p class="text-sm leading-6 text-slate-600">Not always. Availability depends on the video, the transcript service and its support for that video.</p>
+        </article>
+
+        <article class="rounded-2xl border border-slate-200 bg-white p-6">
+          <h3 class="mb-2 font-semibold">Is my API key visible on this page?</h3>
+          <p class="text-sm leading-6 text-slate-600">The frontend does not contain the API key. Keep SUPADATA_API_KEY configured in Vercel Environment Variables and use it only on the server.</p>
+        </article>
+
+        <article class="rounded-2xl border border-slate-200 bg-white p-6">
+          <h3 class="mb-2 font-semibold">Can I download the transcript?</h3>
+          <p class="text-sm leading-6 text-slate-600">Yes. When a transcript is generated successfully, use Copy Transcript or Download TXT.</p>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-slate-200 bg-white py-8 text-center text-sm text-slate-500">
+    <p>&copy; <span id="current-year"></span> Transcript Tools. All rights reserved.</p>
+  </footer>
+
+  <script>
+    "use strict";
+
+    const form = document.getElementById("transcript-form");
+    const urlInput = document.getElementById("youtube-url");
+    const generateBtn = document.getElementById("generate-btn");
+    const clearBtn = document.getElementById("clear-btn");
+    const loadingState = document.getElementById("loading-state");
+    const errorBox = document.getElementById("error-box");
+    const errorMessage = document.getElementById("error-message-text");
+    const outputSection = document.getElementById("output-section");
+    const transcriptContent = document.getElementById("transcript-content");
+    const transcriptInfo = document.getElementById("transcript-info");
+    const copyBtn = document.getElementById("copy-btn");
+    const downloadBtn = document.getElementById("download-btn");
+
+    document.getElementById("current-year").textContent =
+      new Date().getFullYear();
+
+    function isValidYouTubeUrl(value) {
+      try {
+        const url = new URL(value);
+        const host = url.hostname.toLowerCase().replace(/^www\./, "");
+
+        if (host === "youtu.be") {
+          return /^[a-zA-Z0-9_-]{11}$/.test(
+            url.pathname.split("/").filter(Boolean)[0] || ""
+          );
+        }
+
+        if (
+          host === "youtube.com" ||
+          host === "m.youtube.com" ||
+          host === "music.youtube.com" ||
+          host === "youtube-nocookie.com"
+        ) {
+          const videoId =
+            url.searchParams.get("v") ||
+            (url.pathname.match(/^\/(?:embed|shorts|live)\/([^/]+)/) || [])[1];
+
+          return /^[a-zA-Z0-9_-]{11}$/.test(videoId || "");
+        }
+
+        return false;
+      } catch {
+        return false;
       }
     }
-    </script>
 
-    <!-- Tailwind CSS CDN for modern SaaS styling without Inter font -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <style>
-      body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorBox.hidden = false;
+    }
+
+    function hideError() {
+      errorBox.hidden = true;
+      errorMessage.textContent = "";
+    }
+
+    function setLoading(isLoading) {
+      loadingState.hidden = !isLoading;
+      generateBtn.disabled = isLoading;
+      clearBtn.disabled = isLoading;
+      generateBtn.textContent = isLoading
+        ? "Generating..."
+        : "Generate Transcript →";
+    }
+
+    function normalizeTranscript(value) {
+      if (typeof value === "string") {
+        return value.trim();
       }
-    </style>
-</head>
-<body class="bg-gradient-to-br from-slate-50 via-gray-50 to-zinc-100 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
 
-    <!-- Header -->
-    <header class="w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-200">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"></path>
-                    </svg>
-                </div>
-                <span class="font-bold text-lg tracking-tight text-slate-900">Transcript Tools</span>
-            </div>
-            <nav class="hidden sm:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <a href="#how-it-works" class="hover:text-indigo-600 transition-colors">How it works</a>
-                <a href="#faq" class="hover:text-indigo-600 transition-colors">FAQ</a>
-            </nav>
-        </div>
-    </header>
+      if (Array.isArray(value)) {
+        return value.map(item => {
+          if (typeof item === "string") return item;
+          return item.text || item.transcript || "";
+        }).filter(Boolean).join("\n").trim();
+      }
 
-    <!-- Main Content Container -->
-    <main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 py-10 sm:py-16">
-        
-        <!-- Hero Section -->
-        <div class="text-center mb-10">
-            <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-3">
-                YouTube Video to Transcript
-            </h1>
-            <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
-                Get the transcript of a supported YouTube video in seconds. Paste your link below to begin.
-            </p>
-        </div>
-
-        <!-- Tool Card -->
-        <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-200/80 p-6 sm:p-10 mb-16">
-            
-            <form id="transcript-form" onsubmit="event.preventDefault(); handleGenerateTranscript();">
-                <div class="space-y-4">
-                    <div>
-                        <label for="youtube-url" class="block text-sm font-semibold text-slate-700 mb-2">
-                            YouTube Video URL
-                        </label>
-                        <div class="relative flex items-center">
-                            <span class="absolute left-4 text-slate-400">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
-                                </svg>
-                            </span>
-                            <input 
-                                type="url" 
-                                id="youtube-url" 
-                                name="youtube-url" 
-                                required 
-                                placeholder="https://www.youtube.com/watch?v=..." 
-                                class="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm sm:text-base"
-                            >
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col sm:flex-row items-center gap-3 pt-2">
-                        <button 
-                            type="submit" 
-                            id="generate-btn"
-                            class="w-full sm:w-auto flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3.5 px-6 rounded-xl shadow-md shadow-indigo-200 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 flex items-center justify-center space-x-2 text-sm sm:text-base cursor-pointer"
-                        >
-                            <span>Generate Transcript</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </button>
-                        <button 
-                            type="button" 
-                            id="clear-btn"
-                            onclick="handleClear()"
-                            class="w-full sm:w-auto px-6 py-3.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-all focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 text-sm sm:text-base cursor-pointer"
-                        >
-                            Clear
-                        </button>
-                    </div>
-                </div>
-            </form>
-
-            <!-- Loading State (Hidden by default) -->
-            <div id="loading-state" class="hidden mt-8 text-center py-10 border border-dashed border-slate-200 rounded-xl bg-slate-50/50">
-                <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-indigo-600 border-t-transparent mb-3"></div>
-                <p class="text-sm font-medium text-slate-600">Extracting transcript from server...</p>
-                <p class="text-xs text-slate-400 mt-1">This may take a few seconds depending on video length.</p>
-            </div>
-
-            <!-- Error Message Box (Hidden by default) -->
-            <div id="error-box" class="hidden mt-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm flex items-start space-x-3">
-                <svg class="w-5 h-5 text-rose-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                </svg>
-                <div id="error-message-text" class="font-medium"></div>
-            </div>
-
-            <!-- Transcript Output Area (Hidden by default) -->
-            <div id="output-section" class="hidden mt-8 pt-6 border-t border-slate-200">
-                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-3">
-                    <h2 class="text-lg font-bold text-slate-900">Transcript Result</h2>
-                    <div class="flex items-center space-x-2 w-full sm:w-auto">
-                        <button 
-                            type="button" 
-                            id="copy-btn"
-                            onclick="handleCopyTranscript()"
-                            class="flex-1 sm:flex-none px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-lg transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
-                        >
-                            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
-                            </svg>
-                            <span id="copy-text-label">Copy Transcript</span>
-                        </button>
-                        <button 
-                            type="button" 
-                            id="download-btn"
-                            onclick="handleDownloadTranscript()"
-                            class="flex-1 sm:flex-none px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-lg transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
-                        >
-                            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                            </svg>
-                            <span>Download TXT</span>
-                        </button>
-                    </div>
-                </div>
-                <div 
-                    id="transcript-content" 
-                    class="w-full h-72 p-4 bg-slate-50 border border-slate-300 rounded-xl text-slate-800 text-sm sm:text-base overflow-y-auto whitespace-pre-wrap font-mono leading-relaxed"
-                ></div>
-            </div>
-
-        </div>
-
-        <!-- How it works Section -->
-        <section id="how-it-works" class="mb-16">
-            <h2 class="text-2xl font-bold text-slate-900 mb-6 text-center">How it works</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
-                    <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 font-bold flex items-center justify-center mb-4 text-lg">1</div>
-                    <h3 class="font-semibold text-slate-900 mb-2">Paste a supported YouTube URL</h3>
-                    <p class="text-sm text-slate-600">Copy any standard YouTube video link and paste it into the input field above.</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
-                    <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 font-bold flex items-center justify-center mb-4 text-lg">2</div>
-                    <h3 class="font-semibold text-slate-900 mb-2">Click Generate Transcript</h3>
-                    <p class="text-sm text-slate-600">Our secure server proxy fetches the transcript via the Supadata API.</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
-                    <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 font-bold flex items-center justify-center mb-4 text-lg">3</div>
-                    <h3 class="font-semibold text-slate-900 mb-2">Copy or download the transcript</h3>
-                    <p class="text-sm text-slate-600">Quickly copy the text to your clipboard or download it as a text file (.txt) for your notes.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- FAQ Section -->
-        <section id="faq" class="mb-12">
-            <h2 class="text-2xl font-bold text-slate-900 mb-6 text-center">Frequently Asked Questions</h2>
-            <div class="space-y-4 max-w-3xl mx-auto">
-                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
-                    <h3 class="font-semibold text-slate-900 mb-2">What is a YouTube transcript?</h3>
-                    <p class="text-sm text-slate-600">A YouTube transcript is the text version of the spoken words in a video, generated automatically or uploaded by the creator.</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
-                    <h3 class="font-semibold text-slate-900 mb-2">Can every YouTube video be transcribed?</h3>
-                    <p class="text-sm text-slate-600">Videos must have captions available or support AI fallback transcription through our backend API service.</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
-                    <h3 class="font-semibold text-slate-900 mb-2">Is my API key secure?</h3>
-                    <p class="text-sm text-slate-600">Yes! The API key is stored securely on the server environment variables (`SUPADATA_API_KEY`) and is never exposed in client-side code.</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
-                    <h3 class="font-semibold text-slate-900 mb-2">Can I download my transcript?</h3>
-                    <p class="text-sm text-slate-600">Yes! You can instantly download your transcript as a .txt file using the download button or copy it directly to your clipboard.</p>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="border-t border-slate-200 bg-white py-8 text-center text-sm text-slate-500">
-        <div class="max-w-5xl mx-auto px-4">
-            &copy; <span id="current-year"></span> Transcript Tools. All rights reserved.
-        </div>
-    </footer>
-
-    <!-- JavaScript Application Logic calling our secure backend endpoint -->
-    <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-
-        function isValidYouTubeUrl(url) {
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#&?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[2].length === 11);
+      if (value && typeof value === "object") {
+        if (typeof value.text === "string") return value.text.trim();
+        if (typeof value.transcript === "string") {
+          return value.transcript.trim();
         }
 
-        async function getTranscript(videoUrl) {
-            if (!isValidYouTubeUrl(videoUrl)) {
-                throw new Error("Invalid YouTube URL. Please enter a valid YouTube video link.");
-            }
+        if (Array.isArray(value.transcript)) {
+          return normalizeTranscript(value.transcript);
+        }
+      }
 
-            // Call our secure server-side API proxy endpoint
-            const response = await fetch('/api/transcript', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ videoUrl })
-            });
+      return "";
+    }
 
-            const data = await response.json();
+    async function getTranscript(videoUrl) {
+      const response = await fetch("/api/transcript", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({ videoUrl })
+      });
 
-            if (!response.ok || !data.success) {
-                throw new Error(data.message || "Failed to retrieve transcript from the server.");
-            }
+      let data;
 
-            return data.transcript;
+      try {
+        data = await response.json();
+      } catch {
+        throw new Error(
+          "The server returned an invalid response. Please try again."
+        );
+      }
+
+      if (!response.ok || !data || data.success !== true) {
+        if (response.status === 404) {
+          throw new Error(
+            "The transcript API route was not found. Check your Vercel deployment."
+          );
         }
 
-        async function handleGenerateTranscript() {
-            const urlInput = document.getElementById('youtube-url');
-            const url = urlInput.value.trim();
-            
-            const loadingState = document.getElementById('loading-state');
-            const errorBox = document.getElementById('error-box');
-            const errorMessageText = document.getElementById('error-message-text');
-            const outputSection = document.getElementById('output-section');
-            const transcriptContent = document.getElementById('transcript-content');
-            const generateBtn = document.getElementById('generate-btn');
-
-            // Reset UI states
-            errorBox.classList.add('hidden');
-            outputSection.classList.add('hidden');
-            transcriptContent.textContent = '';
-
-            if (!url) {
-                showError("Please enter a valid YouTube URL.");
-                return;
-            }
-
-            // Show loading state
-            loadingState.classList.remove('hidden');
-            generateBtn.disabled = true;
-            generateBtn.classList.add('opacity-50', 'cursor-not-allowed');
-
-            try {
-                const transcriptText = await getTranscript(url);
-                
-                transcriptContent.textContent = transcriptText;
-                outputSection.classList.remove('hidden');
-                outputSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-            } catch (err) {
-                showError(err.message || "An unexpected error occurred while generating the transcript.");
-            } finally {
-                loadingState.classList.add('hidden');
-                generateBtn.disabled = false;
-                generateBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-            }
+        if (response.status === 429) {
+          throw new Error(
+            "The request limit may have been reached. Please try again later."
+          );
         }
 
-        function showError(message) {
-            const errorBox = document.getElementById('error-box');
-            const errorMessageText = document.getElementById('error-message-text');
-            errorMessageText.textContent = message;
-            errorBox.classList.remove('hidden');
-            errorBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        throw new Error(
+          data?.message ||
+          data?.error ||
+          "Could not retrieve the transcript. Please try another supported video."
+        );
+      }
+
+      const transcript = normalizeTranscript(data.transcript);
+
+      if (!transcript) {
+        throw new Error(
+          "No transcript text was returned for this video."
+        );
+      }
+
+      return {
+        text: transcript,
+        lang: typeof data.lang === "string" ? data.lang : ""
+      };
+    }
+
+    form.addEventListener("submit", async function(event) {
+      event.preventDefault();
+      hideError();
+
+      outputSection.hidden = true;
+      transcriptContent.value = "";
+      transcriptInfo.textContent = "";
+
+      const videoUrl = urlInput.value.trim();
+
+      if (!isValidYouTubeUrl(videoUrl)) {
+        showError(
+          "Please enter a valid YouTube video URL, including a video ID."
+        );
+        urlInput.focus();
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const result = await getTranscript(videoUrl);
+
+        transcriptContent.value = result.text;
+        transcriptInfo.textContent =
+          "Transcript generated successfully." +
+          (result.lang ? " Language: " + result.lang + "." : "");
+
+        outputSection.hidden = false;
+        outputSection.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest"
+        });
+      } catch (error) {
+        showError(
+          error.message ||
+          "An unexpected error occurred. Please try again."
+        );
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    clearBtn.addEventListener("click", function() {
+      form.reset();
+      hideError();
+      outputSection.hidden = true;
+      loadingState.hidden = true;
+      transcriptContent.value = "";
+      transcriptInfo.textContent = "";
+      setLoading(false);
+      urlInput.focus();
+    });
+
+    copyBtn.addEventListener("click", async function() {
+      const text = transcriptContent.value;
+
+      if (!text) return;
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          transcriptContent.focus();
+          transcriptContent.select();
+
+          const copied = document.execCommand("copy");
+
+          if (!copied) {
+            throw new Error("Copy failed");
+          }
+
+          transcriptContent.setSelectionRange(0, 0);
         }
 
-        function handleClear() {
-            document.getElementById('youtube-url').value = '';
-            document.getElementById('loading-state').classList.add('hidden');
-            document.getElementById('error-box').classList.add('hidden');
-            document.getElementById('output-section').classList.add('hidden');
-            document.getElementById('transcript-content').textContent = '';
-        }
+        copyBtn.textContent = "Copied!";
 
-        async function handleCopyTranscript() {
-            const transcriptText = document.getElementById('transcript-content').textContent;
-            const copyTextLabel = document.getElementById('copy-text-label');
-            
-            if (!transcriptText) return;
+        setTimeout(function() {
+          copyBtn.textContent = "Copy Transcript";
+        }, 2000);
+      } catch {
+        showError(
+          "Automatic copy failed. Select the transcript and copy it manually."
+        );
+      }
+    });
 
-            try {
-                await navigator.clipboard.writeText(transcriptText);
-                copyTextLabel.textContent = 'Copied!';
-                setTimeout(() => {
-                    copyTextLabel.textContent = 'Copy Transcript';
-                }, 2000);
-            } catch (err) {
-                alert('Failed to copy transcript to clipboard.');
-            }
-        }
+    downloadBtn.addEventListener("click", function() {
+      const text = transcriptContent.value;
 
-        function handleDownloadTranscript() {
-            const transcriptText = document.getElementById('transcript-content').textContent;
-            if (!transcriptText) return;
+      if (!text) return;
 
-            const blob = new Blob([transcriptText], { type: 'text/plain;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'youtube-transcript.txt'
+      const blob = new Blob(
+        ["\uFEFF", text],
+        { type: "text/plain;charset=utf-8" }
+      );
+
+      const objectUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = objectUrl;
+      link.download = "youtube-transcript.txt";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      setTimeout(function() {
+        URL.revokeObjectURL(objectUrl);
+      }, 1000);
+    });
+  </script>
+
+</body>
+</html>
+
