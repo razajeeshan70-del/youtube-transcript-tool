@@ -1,4 +1,4 @@
-
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://youtube-transcript-tool-2qsz.vercel.app/</loc>
@@ -17,5 +17,8 @@
   </url>
   <url>
     <loc>https://youtube-transcript-tool-2qsz.vercel.app/disclaimer.html</loc>
+  </url>
+  <url>
+    <loc>https://youtube-transcript-tool-2qsz.vercel.app/how-to-get-youtube-transcript.html</loc>
   </url>
 </urlset>
