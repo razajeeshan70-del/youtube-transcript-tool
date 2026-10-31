@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<url>
-  <loc>https://youtube-transcript-tool-2qsz.vercel.app/youtube-transcript-mobile.html</loc>
-  <lastmod>2026-10-29</lastmod>
-</url>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://youtube-transcript-tool-2qsz.vercel.app/</loc>
@@ -24,5 +20,9 @@
   </url>
   <url>
     <loc>https://youtube-transcript-tool-2qsz.vercel.app/how-to-get-youtube-transcript.html</loc>
+  </url>
+  <url>
+    <loc>https://youtube-transcript-tool-2qsz.vercel.app/youtube-transcript-mobile.html</loc>
+    <lastmod>2026-10-29</lastmod>
   </url>
 </urlset>
